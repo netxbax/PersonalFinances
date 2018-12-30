@@ -12,8 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('home');
 });
+
+Route::resource('movements','MovementsController');
 
 Auth::routes();
 

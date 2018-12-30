@@ -19,7 +19,8 @@ class CreateMovementsTable extends Migration
             $table->string('type',50);
             $table->dateTime('movement_date');
             $table->unsignedInteger('category_id');
-            $table->string('descripcion',1000);
+            $table->string('description',1000);
+            $table->unsignedInteger('money');
             $table->string('image')->nullable();
             $table->unsignedInteger('user_id');
         });
