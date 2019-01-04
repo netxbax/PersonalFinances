@@ -35,8 +35,28 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
 
+                    <ul class="navbar-nav mr-auto">
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            <li>
+                                <a href="{{ route('movements.create') }}">Registra movimiento </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('movements.index') }}">
+                                     lista de movimientos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('movements.index') }}?type=Engreso">
+                                    lista de movimientos Engreso
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('movements.index') }}?type=Ingreso">
+                                    lista de movimientos Ingreso
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

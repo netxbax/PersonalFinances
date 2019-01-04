@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\StoreMovement;
+use App\Movements;
 use Illuminate\Http\Request;
 
 
@@ -14,9 +15,25 @@ class MovementsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request)
+    {
+        $title = 'Movimientos';
+        $movements = Movements::where('user_id', auth()->user()->id);
+
+        if($request->has('type')){
+            $movements = $movements->where('type',$request->get('type'));
+            $title = 'Movimiento de '. $request->get('type');
+        }
+
+        $movements = $movements->orderBy('movement_date','desc')->paginate();
+
+        return view('movements.index',compact('movements','title'));
+
     }
 
     /**
@@ -38,7 +55,24 @@ class MovementsController extends Controller
      */
     public function store(StoreMovement $request)
     {
-        return 'store';
+        $movement = new Movements($request->all());
+        $movement->money = $request->get('money_decimal') *100;
+        $category = $request->get('category_id');
+
+        if(!is_numeric($category)){
+            $newCategory = Category::firstOrCreate(['name' => ucwords($category)]);
+            $movement->category_id = $newCategory->id;
+        }
+        $movement->user_id = auth()->user()->id;
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $file = $image->store('imagenes/movements');
+            $movement->image = $file;
+        }
+        $movement->save();
+        return redirect()->route('movements.show',$movement);
+
     }
 
     /**
@@ -49,7 +83,9 @@ class MovementsController extends Controller
      */
     public function show($id)
     {
-        //
+        $movement = Movements::where('user_id', auth()->user()->id)->where('id',$id)->first();
+
+        return view('movements.show', compact('movement'));
     }
 
     /**

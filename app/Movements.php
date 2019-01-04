@@ -10,7 +10,7 @@ class Movements extends Model
     protected $table = "movements";
     protected $fillable = [
         'type',
-        'movements_date',
+        'movement_date',
         'category_id',
         'description',
         'money'
@@ -24,6 +24,10 @@ class Movements extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
     }
 
 }

@@ -1,5 +1,5 @@
 <div class="form-group {{$errors->has('movement_date') ? 'has-error': '' }}">
-    {!! Form::label('movement_date','Fecha') !!}
+    {!! Form::label('movement_date','Date') !!}
 
     {!!
         Form::date('movement_date',
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group {{$errors->has('type') ? 'has-error': '' }}">
-    {!! Form::label('type','Tipo') !!}
+    {!! Form::label('type','Type') !!}
 
     {!!
         Form::select('type',
@@ -43,7 +43,7 @@
 </div>
 
 <div class="form-group {{$errors->has('category_id') ? 'has-error': '' }}">
-    {!! Form::label('category_id','Categoria') !!}
+    {!! Form::label('category_id','Category') !!}
 
     {!!
         Form::select('category_id',
@@ -64,7 +64,7 @@
 
 </div>
 <div class="form-group {{$errors->has('description') ? 'has-error': '' }}">
-    {!! Form::label('description','Descripcion') !!}
+    {!! Form::label('description','Description') !!}
 
     {!!
         Form::textarea('description',

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Moviemiento Nuevo</h1>
+    <h1>Movement New</h1>
     {!!
         Form::model(
             $movement = new \App\Movements(['money' => 0.00]),
