@@ -96,19 +96,42 @@ class MovementsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::orderBy('name')->pluck('name','id');
+        $movement = Movements::where('user_id', auth()->user()->id)->where('id',$id)->first();
+
+        return view('movements.edit',compact('categories','movement'));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreMovement\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreMovement $request, $id)
     {
-        //
+       $movement = Movements::where('user_id', auth()->user()->id)->where('id',$id)->first();
+       $movement->type = $request->get('type');
+       $movement->movement_date= $request->get('movement_date');
+       $movement->money = $request->get('monet_decimal') *100;
+       $movement->description = $request->get('description');
+        $category = $request->get('caategory_id');
+
+        if(!is_numeric($category)){
+            $newCategory = Category::firstOrCreate(['name' => ucwords($category)]);
+            $movement->category_id = $newCategory->id;
+        }
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $file = $image->store('imagenes/movements');
+            $movement->image = $file;
+        }
+        $movement->save();
+        return redirect()->route('movements.show',$movement);
+
     }
 
     /**

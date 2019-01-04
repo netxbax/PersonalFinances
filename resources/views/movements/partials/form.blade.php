@@ -3,7 +3,7 @@
 
     {!!
         Form::date('movement_date',
-            ($movement->movement_date? $movement->movement_date->format('Y-m-d') : date('Y-m-d')),
+            ($movement->movement_date? $movement->movement_date : date('Y-m-d')),
             [
                 'required',
                 'class' => 'form-control'
